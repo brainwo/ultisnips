@@ -1,0 +1,96 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet stateless "Create a StatelessWidget class"
+class $1 extends StatelessWidget {
+  const $1({key}) : super(key: key);
+
+  @override
+  build(context) {
+    return Container();
+  }
+}
+endsnippet
+
+snippet flutter "Initate Flutter project"
+void main() => runApp(const App());
+
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: '$1',
+
+      // Theme
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      highContrastTheme: highContrastTheme,
+      highContrastDarkTheme: highContrastDarkTheme,
+
+      // Route
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => const HomeRoute(
+              title: 'Something',
+            ),
+        '/quiz': (context) => const QuizRoute(
+              title: 'Something',
+            ),
+      },
+      onUnknownRoute: (e) {
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Not Found'),
+                  MaterialButton(
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, '/home'),
+                    child: const Text('Go back home'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+
+      //Locale
+      locale: const Locale('en', 'US'),
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('id', 'ID'),
+        Locale('zh', 'CN'),
+        Locale('ja', 'JP'),
+      ],
+    );
+  }
+}
+endsnippet
