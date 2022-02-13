@@ -1,3 +1,9 @@
+This repository is automatically commited and pushed using:
+
+```
+autocmd BufWritePost *coc/ultisnips/*.snippets !git add .; git commit -m "update"; git push -u origin main
+```
+
 A valid snippet should starts with:
 
     	snippet trigger_word [ "description" [ options ] ]
