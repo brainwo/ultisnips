@@ -1,4 +1,4 @@
-snippet display [ "Display trait implement boiler" ]
+snippet display "Display trait implement boiler"
 impl fmt::Display for ${1} {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0)
@@ -6,7 +6,7 @@ impl fmt::Display for ${1} {
 }
 endsnippet
 
-snippet tryfrom [ "TryForm trait implement boiler" ]
+snippet tryfrom "TryForm trait implement boiler"
 impl TryFrom<i32> for EvenNumber {
     type Error = ();
 
@@ -20,6 +20,6 @@ impl TryFrom<i32> for EvenNumber {
 }
 endsnippet
 
-snippet inspect [ "Inspect an iter" ]
+snippet inspect "Inspect an iter"
 .inspect(|x| println!("{x}"))
 endsnippet
