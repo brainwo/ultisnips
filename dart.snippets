@@ -1,9 +1,9 @@
 snippet stateless "Create a StatelessWidget class"
 class $1 extends StatelessWidget {
-  const $1({key}) : super(key: key);
+  const $1({super.key});
 
   @override
-  build(context) {
+  Widget build(BuildContext context) {
     return Container();
   }
 }
@@ -55,15 +55,6 @@ class App extends StatelessWidget {
           ),
         );
       },
-
-      //Locale
-      locale: const Locale('en', 'US'),
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('id', 'ID'),
-        Locale('zh', 'CN'),
-        Locale('ja', 'JP'),
-      ],
     );
   }
 }
