@@ -59,3 +59,30 @@ class App extends StatelessWidget {
   }
 }
 endsnippet
+
+snippet timerstream "Stream timer"
+Stream<String> timerStream(DateTime start) async* {
+  while (true) {
+    Duration duration = start.difference(DateTime.now());
+    if (duration.inSeconds < 0) {
+      yield '00:00.000';
+      break;
+    }
+    int minute = duration.inMinutes;
+    int second = duration.inSeconds % 60;
+    int millisecond = duration.inMilliseconds % 1000;
+    String buff = '';
+    if (minute < 10) buff += '0';
+    buff += minute.toString();
+    buff += ':';
+    if (second < 10) buff += '0';
+    buff += second.toString();
+    buff += '.';
+    if (millisecond < 100) buff += '0';
+    if (millisecond < 10) buff += '0';
+    buff += millisecond.toString();
+    yield buff;
+    await Future.delayed(const Duration(milliseconds: 10));
+  }
+}
+endsnippet
