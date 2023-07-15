@@ -1,0 +1,105 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet clap "Command Line Argument Parser"
+#include "stdio.h"
+#include "string.h"
+
+#define EXECUTABLE_NAME "pea-formatter"
+#define VERSION_NUMBER "v0.1.0"
+#define APPLY_FLAG 0b001
+#define HELP_FLAG 0b010
+#define VERSION_FLAG 0b100
+
+struct command {
+  short flags;
+  char *file;
+};
+
+void printHelp(void) {
+  printf("Format Pea source code.\n"
+         "\n"
+         "Usage: %s [options...] <file>\n"
+         "-a, --apply     Apply format to file (default: output to stdout)\n"
+         "\n"
+         "-h, --help      Print this usage information\n"
+         "    --version   Print version number\n",
+         EXECUTABLE_NAME);
+}
+
+void printVersion(void) { printf("%s %s\n", EXECUTABLE_NAME, VERSION_NUMBER); }
+struct command parseCommand(int argc, char **argv) {
+  struct command result;
+
+  result.flags = 0;
+  result.file = "";
+
+  for (int i = 1; i < argc; i++) {
+    if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+      result.flags |= HELP_FLAG;
+    } else if (strcmp(argv[i], "--version") == 0) {
+      result.flags |= VERSION_FLAG;
+    } else if (strcmp(argv[i], "-a") == 0 || strcmp(argv[i], "--apply") == 0) {
+      result.flags |= APPLY_FLAG;
+    } else {
+      result.file = argv[i];
+    }
+  }
+  return result;
+}
+
+short containsFlag(short flags, short flag) { return (flags | flag) == flags; }
+
+int main(int argc, char **argv) {
+  if (argc < 2) {
+    printVersion();
+    printf("\n");
+    printHelp();
+    return 0;
+  }
+
+  struct command parsedCommand = parseCommand(argc, argv);
+
+  if (containsFlag(parsedCommand.flags, HELP_FLAG)) {
+    printHelp();
+    return 0;
+  }
+  if (containsFlag(parsedCommand.flags, VERSION_FLAG)) {
+    printVersion();
+    return 0;
+  }
+
+  if (strcmp(parsedCommand.file, "") == 0) {
+    printf("Missing <file> argument.\n");
+    printf("Check `%s --help` for more information.\n", EXECUTABLE_NAME);
+    return 1;
+  };
+
+  printf("%s\n", parsedCommand.file);
+
+  return 0;
+}
+endsnippet
