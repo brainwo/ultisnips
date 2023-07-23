@@ -26,6 +26,6 @@
 
 snippet gtknoheader "Force app to be tiled with empty header bar"
 GtkHeaderBar *header_bar = GTK_HEADER_BAR(gtk_header_bar_new());
-gtk_window_set_title(window, $1);
+gtk_window_set_title(window, "$1");
 gtk_window_set_titlebar(window, GTK_WIDGET(header_bar));
 endsnippet
