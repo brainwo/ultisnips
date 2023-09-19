@@ -86,3 +86,12 @@ Stream<String> timerStream(DateTime start) async* {
   }
 }
 endsnippet
+
+snippet nyxxmessage "Create a message"
+event.message.channel.sendMessage(MessageBuilder(embeds: [
+  EmbedBuilder(
+    title: "An error occured",
+    color: DiscordColor.fromRgb(255, 0, 0),
+  )
+]));
+endsnippet
